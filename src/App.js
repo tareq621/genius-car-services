@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import { Route, Routes } from 'react-router-dom';
 import About from './Pages/About/About';
@@ -9,6 +8,7 @@ import ServicesDetail from './Pages/ServicesDetail/ServicesDetail';
 import NotFound from './Pages/Shared/NotFound/NotFound';
 import Login from './Pages/Login/Login/Login';
 import Register from './Pages/Login/Register/Register';
+import ExpertDetail from './Pages/Home/Expert/ExpertDetail/ExpertDetail';
 
 
 function App() {
@@ -22,6 +22,7 @@ function App() {
         <Route path='/about' element={<About></About>}></Route>
         <Route path='/login' element={<Login></Login>}></Route>
         <Route path='/register' element={<Register></Register>}></Route>
+        <Route path='/expert' element={<ExpertDetail></ExpertDetail>}></Route>
         <Route path="*" element={<NotFound></NotFound>}></Route>
       </Routes>
       <Footer></Footer>
