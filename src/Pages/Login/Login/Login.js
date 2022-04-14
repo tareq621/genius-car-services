@@ -4,7 +4,10 @@ import { Button, Form } from 'react-bootstrap';
 import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { useSendPasswordResetEmail } from 'react-firebase-hooks/auth';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import auth from '../../../firebase.init';
+import Loading from '../../Shared/Loading/Loading';
 import SocialLogin from '../SocialLogin/SocialLogin';
 import './Login.css'
 
@@ -28,6 +31,9 @@ const Login = () => {
     const [sendPasswordResetEmail, sending, error3] = useSendPasswordResetEmail(
         auth
     );
+    if (loading || sending) {
+        return <Loading></Loading>
+    }
 
     if (user) {
         navigate(from, { replace: true });
@@ -49,13 +55,17 @@ const Login = () => {
 
     const resetPassword = async () => {
         const email = emailRef.current.value;
-        await sendPasswordResetEmail(email);
-        alert('Sent email');
+        if (email) {
+            await sendPasswordResetEmail(email);
+            toast('Sent email');
+        }
+        else {
+            toast('Please enter your email address')
+        }
 
     }
-
     return (
-        <div className='container w-50 mx-auto'>
+        <div className='container col-12 col-sm-12 col-md-6'>
             <h2 className='text-primary text-center my-2'>Please Login</h2>
             <Form onSubmit={handleSubmit}>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -71,8 +81,9 @@ const Login = () => {
             </Form>
             {errorElement}
             <p>New to genius car? <Link to="/register" className='text-primary pe-auto text-decoration-none' onClick={navigateRegister}>Please Register</Link></p>
-            <p>Forget Password? <Link to="/register" className='text-primary pe-auto text-decoration-none' onClick={resetPassword}>Reset Password</Link></p>
+            <p>Forget Password? <button to="/register" className='btn btn-link text-primary pe-auto text-decoration-none' onClick={resetPassword}>Reset Password</button></p>
             <SocialLogin></SocialLogin>
+            <ToastContainer />
         </div>
     );
 };

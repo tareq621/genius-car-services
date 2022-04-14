@@ -5,6 +5,7 @@ import facebook from '../../../images/social/facebook.png'
 import { useSignInWithFacebook, useSignInWithGithub, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import auth from '../../../firebase.init';
 import { useNavigate } from 'react-router-dom';
+import Loading from '../../Shared/Loading/Loading';
 
 const SocialLogin = () => {
     const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
@@ -16,6 +17,9 @@ const SocialLogin = () => {
     const navigate = useNavigate();
     let errorElement;
 
+    if (loading || loading1) {
+        return <Loading></Loading>
+    }
     // error handle
     if (error || error1) {
 
@@ -31,7 +35,7 @@ const SocialLogin = () => {
     }
 
     return (
-        <div>
+        <div className='col-12 col-sm-12 col-md-6 mx-auto'>
             <div className='d-flex align-items-center'>
                 <div style={{ height: "1px" }} className='w-50 bg-secondary'></div>
                 <p className='mt-2 px-2'>or</p>
@@ -39,18 +43,18 @@ const SocialLogin = () => {
             </div>
             {errorElement}
             <div>
-                <button className='btn btn-info w-75 d-block mx-auto rounded-pill' onClick={() => signInWithGoogle()}>
+                <button className='btn btn-info w-100 d-block mx-auto rounded-pill' onClick={() => signInWithGoogle()}>
                     <img width={35} src={google} alt="" />
                     <span className='px-2'>Google Sign In</span>
                 </button>
             </div>
             <div className='mt-4'>
-                <button className='btn btn-info w-75 d-block mx-auto rounded-pill' onClick={() => signInWithFacebook()}><img width={35} src={facebook} alt="" /> Facebook Sign In
+                <button className='btn btn-info w-100 d-block mx-auto rounded-pill' onClick={() => signInWithFacebook()}><img width={35} src={facebook} alt="" /> Facebook Sign In
                 </button>
             </div>
 
             <div className='mt-4'>
-                <button className='btn btn-info w-75 d-block mx-auto rounded-pill' onClick={() => signInWithGithub()}><img width={35} src={github} alt="" /> Github Sign In</button>
+                <button className='btn btn-info w-100 d-block mx-auto rounded-pill' onClick={() => signInWithGithub()}><img width={35} src={github} alt="" /> Github Sign In</button>
             </div>
 
         </div>
